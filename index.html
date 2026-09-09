@@ -947,11 +947,23 @@ function renderStep() {
 
 
   // Status text
-  document.getElementById("stepNote").textContent =
-    currentStep === yuraQuest.length - 1
-      ? "QUEST COMPLETE"
-      : "Continue when you are ready.";
+ document.getElementById("stepNote").textContent =
+  yuraComplete
+    ? "QUEST COMPLETE"
+    : "Continue when you are ready.";
 
+document.getElementById("completeButton").textContent =
+  yuraComplete
+    ? "QUEST COMPLETE"
+    : "MARK QUEST COMPLETE";
+
+document.getElementById("completeButton").disabled =
+  yuraComplete;
+
+document.querySelector(".quest-status").textContent =
+  yuraComplete
+    ? "● COMPLETE"
+    : "● IN PROGRESS";
 
   // Save progress locally
   localStorage.setItem(
