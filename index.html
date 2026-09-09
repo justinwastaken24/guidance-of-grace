@@ -1083,7 +1083,25 @@ function completeYura() {
   document.getElementById("stepNote").textContent =
     "QUEST COMPLETE";
 }
+function updateHomepageYura() {
 
+  const status = document.getElementById("yuraStatus");
+  const button = document.getElementById("yuraButton");
+
+  if (!status || !button) return;
+
+  if (yuraComplete) {
+
+    status.textContent = "COMPLETE";
+    button.textContent = "VIEW QUEST";
+
+  } else {
+
+    status.textContent = "IN PROGRESS";
+    button.textContent = "BEGIN QUEST";
+
+  }
+}
 
 function comingSoon() {
 
@@ -1093,6 +1111,9 @@ function comingSoon() {
   );
 
 }
+
+ updateHomepageYura();
+  
 </script>
 
 </body>
