@@ -1102,15 +1102,19 @@ function updateHomepageYura() {
 
   if (yuraComplete) {
 
-    status.textContent = "COMPLETE";
-    button.textContent = "VIEW QUEST";
+  status.textContent = "COMPLETE";
+  button.textContent = "VIEW QUEST";
 
+} else {
+
+  status.textContent = "IN PROGRESS";
+
+  if (currentStep > 0) {
+    button.textContent = "CONTINUE QUEST";
   } else {
-
-    status.textContent = "IN PROGRESS";
     button.textContent = "BEGIN QUEST";
-
   }
+
 }
 
 function comingSoon() {
