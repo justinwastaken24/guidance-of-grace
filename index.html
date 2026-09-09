@@ -815,7 +815,11 @@ APP STATE
 
 let currentStep = 0;
 
-const savedStep = localStorage.getItem("yuraProgress");
+let yuraComplete =
+  localStorage.getItem("yuraComplete") === "true";
+
+const savedStep =
+  localStorage.getItem("yuraProgress");
 
 if (savedStep !== null) {
   currentStep = Number(savedStep);
