@@ -1040,8 +1040,31 @@ PLACEHOLDER QUESTS
 ==================================================
 */
 
-function comingSoon() {
+function completeYura() {
 
+  const confirmed = confirm(
+    "Mark Yura's quest as complete?"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  yuraComplete = true;
+
+  localStorage.setItem(
+    "yuraComplete",
+    "true"
+  );
+
+  document.querySelector(".quest-status").textContent =
+    "● COMPLETE";
+
+  document.getElementById("completeButton").textContent =
+    "QUEST COMPLETE";
+
+  document.getElementById("completeButton").disabled =
+    true;
   alert(
     "This quest is coming soon.\n\n" +
     "Yura is our first fully playable quest."
