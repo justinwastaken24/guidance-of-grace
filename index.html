@@ -1,374 +1,1016 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Guidance of Grace</title>
+<title>Guidance of Grace</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    body {
-      background:
-        radial-gradient(circle at 50% 0%, #1d170b 0%, #090909 38%, #050505 100%);
-      color: #eee8d5;
-      font-family: Georgia, "Times New Roman", serif;
-      min-height: 100vh;
-    }
+:root {
+  --bg: #070707;
+  --panel: #0d0c09;
+  --gold: #c9a84e;
+  --gold-light: #e1c66f;
+  --gold-dark: #80682f;
+  --text: #eee8d8;
+  --muted: #938d7d;
+  --danger: #a94d47;
+  --yellow: #b89a48;
+  --green: #6d9967;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      border: 1px solid rgba(190, 155, 70, 0.18);
-    }
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 50% 0%, #211a0d 0%, #090909 35%, #050505 75%);
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+}
 
-    header {
-      text-align: center;
-      padding: 75px 20px 55px;
-    }
+button {
+  font: inherit;
+}
 
-    .eyebrow {
-      color: #a88a43;
-      font-size: 12px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
+header {
+  text-align: center;
+  padding: 55px 20px 35px;
+}
 
-    h1 {
-      color: #d5b65c;
-      font-size: clamp(42px, 8vw, 76px);
-      letter-spacing: 7px;
-      font-weight: normal;
-      text-shadow: 0 0 25px rgba(213, 182, 92, 0.15);
-    }
+.eyebrow {
+  color: #a88a43;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
 
-    .subtitle {
-      color: #b8b1a0;
-      font-size: 17px;
-      margin-top: 18px;
-      font-style: italic;
-    }
+.logo {
+  color: var(--gold-light);
+  font-size: clamp(38px, 7vw, 70px);
+  font-weight: normal;
+  letter-spacing: 6px;
+  text-shadow: 0 0 25px rgba(201,168,78,.12);
+}
 
-    .gold-line {
-      width: 100px;
-      height: 1px;
-      background: #a88a43;
-      margin: 32px auto 0;
-      opacity: 0.7;
-    }
+.subtitle {
+  color: #aaa392;
+  font-size: 16px;
+  font-style: italic;
+  margin-top: 14px;
+}
 
-    main {
-      width: min(1100px, 92%);
-      margin: 0 auto;
-      padding-bottom: 80px;
-    }
+.gold-line {
+  width: 90px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .65;
+  margin: 28px auto 0;
+}
 
-    .section-title {
-      color: #c6a653;
-      font-size: 13px;
-      letter-spacing: 3px;
-      text-align: center;
-      margin-bottom: 28px;
-    }
+/* HOME */
 
-    .quests {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
+.page {
+  width: min(1100px, 92%);
+  margin: auto;
+  padding-bottom: 70px;
+}
 
-    .quest-card {
-      position: relative;
-      min-height: 340px;
-      border: 1px solid rgba(182, 150, 68, 0.55);
-      background: linear-gradient(
-        145deg,
-        rgba(28, 23, 14, 0.95),
-        rgba(8, 8, 8, 0.98)
-      );
-      overflow: hidden;
-      transition: transform 0.25s ease, border-color 0.25s ease;
-    }
+.section-title {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-align: center;
+  margin: 25px 0;
+}
 
-    .quest-card:hover {
-      transform: translateY(-5px);
-      border-color: #c7a84d;
-    }
+.quest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
 
-    .quest-art {
-      height: 170px;
-      position: relative;
-      overflow: hidden;
-    }
+.quest-card {
+  border: 1px solid rgba(201,168,78,.45);
+  background: rgba(10,9,7,.92);
+  overflow: hidden;
+  transition: .25s;
+}
 
-    /* Original CSS artwork — no external copyrighted images */
-    .ranni-art {
-      background:
-        radial-gradient(circle at 65% 38%, rgba(125, 155, 215, 0.8) 0 9%, transparent 10%),
-        radial-gradient(circle at 65% 38%, rgba(82, 111, 175, 0.2) 0 28%, transparent 29%),
-        linear-gradient(145deg, #11172a, #090b12 65%, #050505);
-    }
+.quest-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+}
 
-    .millicent-art {
-      background:
-        radial-gradient(circle at 25% 70%, rgba(140, 75, 55, 0.45), transparent 25%),
-        radial-gradient(circle at 75% 25%, rgba(170, 120, 50, 0.22), transparent 30%),
-        linear-gradient(145deg, #24150f, #100b09 65%, #050505);
-    }
+.art {
+  height: 175px;
+  position: relative;
+  overflow: hidden;
+}
 
-    .yura-art {
-      background:
-        radial-gradient(circle at 70% 35%, rgba(130, 20, 20, 0.5), transparent 27%),
-        linear-gradient(145deg, #210c0c, #0d0707 65%, #050505);
-    }
+.ranni {
+  background:
+    radial-gradient(circle at 68% 38%, #829bd4 0 7%, transparent 8%),
+    radial-gradient(circle at 68% 38%, rgba(110,140,205,.22) 0 28%, transparent 29%),
+    linear-gradient(145deg,#10182d,#080b12);
+}
 
-    .moon {
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 1px solid rgba(190, 210, 255, 0.55);
-      top: 38px;
-      right: 55px;
-      box-shadow: 0 0 35px rgba(120, 155, 220, 0.35);
-    }
+.millicent {
+  background:
+    radial-gradient(circle at 28% 65%,rgba(160,75,50,.4),transparent 27%),
+    radial-gradient(circle at 76% 28%,rgba(190,145,65,.2),transparent 28%),
+    linear-gradient(145deg,#24140f,#090807);
+}
 
-    .needle {
-      position: absolute;
-      width: 3px;
-      height: 120px;
-      background: rgba(205, 170, 75, 0.45);
-      transform: rotate(35deg);
-      left: 48%;
-      top: 25px;
-    }
+.yura {
+  background:
+    radial-gradient(circle at 70% 35%,rgba(150,25,25,.5),transparent 30%),
+    linear-gradient(145deg,#220b0b,#080606);
+}
 
-    .blade {
-      position: absolute;
-      width: 160px;
-      height: 2px;
-      background: rgba(180, 40, 35, 0.7);
-      transform: rotate(-35deg);
-      right: -20px;
-      bottom: 40px;
-      box-shadow: 0 0 12px rgba(180, 40, 35, 0.4);
-    }
+.moon {
+  position:absolute;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:1px solid rgba(190,210,255,.55);
+  top:38px;
+  right:55px;
+  box-shadow:0 0 35px rgba(120,155,220,.3);
+}
 
-    .card-content {
-      padding: 24px;
-    }
+.needle {
+  position:absolute;
+  width:3px;
+  height:120px;
+  background:rgba(205,170,75,.45);
+  transform:rotate(35deg);
+  left:48%;
+  top:25px;
+}
 
-    .quest-name {
-      color: #d7bd72;
-      font-size: 27px;
-      letter-spacing: 3px;
-      font-weight: normal;
-    }
+.blade {
+  position:absolute;
+  width:170px;
+  height:2px;
+  background:rgba(180,40,35,.75);
+  transform:rotate(-35deg);
+  right:-20px;
+  bottom:40px;
+}
 
-    .status {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin-top: 14px;
-      color: #aaa393;
-      font-family: Arial, sans-serif;
-      font-size: 11px;
-      letter-spacing: 1.5px;
-    }
+.card-content {
+  padding:23px;
+}
 
-    .risk {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      display: inline-block;
-    }
+.quest-name {
+  color: var(--gold-light);
+  font-size:26px;
+  font-weight:normal;
+  letter-spacing:3px;
+}
 
-    .green {
-      background: #6d9b67;
-      box-shadow: 0 0 7px rgba(109, 155, 103, 0.45);
-    }
+.status {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:13px;
+  color:#aaa392;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:1.5px;
+}
 
-    .yellow {
-      background: #b69a4b;
-      box-shadow: 0 0 7px rgba(182, 154, 75, 0.45);
-    }
+.risk {
+  width:9px;
+  height:9px;
+  border-radius:50%;
+}
 
-    .red {
-      background: #a94c46;
-      box-shadow: 0 0 7px rgba(169, 76, 70, 0.45);
-    }
+.green {
+  background:var(--green);
+  box-shadow:0 0 7px rgba(109,153,103,.4);
+}
 
-    .risk-text {
-      margin-top: 12px;
-      color: #777264;
-      font-size: 12px;
-      line-height: 1.5;
-    }
+.yellow {
+  background:var(--yellow);
+  box-shadow:0 0 7px rgba(184,154,72,.4);
+}
 
-    .begin {
-      width: 100%;
-      margin-top: 22px;
-      padding: 12px;
-      background: transparent;
-      border: 1px solid #806a38;
-      color: #cdb15c;
-      font-family: Georgia, serif;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+.red {
+  background:var(--danger);
+  box-shadow:0 0 7px rgba(169,77,71,.4);
+}
 
-    .begin:hover {
-      background: rgba(180, 145, 55, 0.1);
-      border-color: #cdb15c;
-    }
+.risk-description {
+  color:#777164;
+  font-size:12px;
+  line-height:1.5;
+  margin-top:11px;
+}
 
-    footer {
-      border-top: 1px solid rgba(180, 145, 55, 0.2);
-      text-align: center;
-      padding: 28px 20px;
-      color: #686358;
-      font-family: Arial, sans-serif;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
+.button {
+  width:100%;
+  padding:12px;
+  margin-top:21px;
+  background:transparent;
+  border:1px solid var(--gold-dark);
+  color:var(--gold-light);
+  cursor:pointer;
+  letter-spacing:2px;
+  transition:.2s;
+}
 
-    @media (max-width: 800px) {
-      .quests {
-        grid-template-columns: 1fr;
-        max-width: 520px;
-        margin: 0 auto;
-      }
+.button:hover {
+  background:rgba(201,168,78,.08);
+  border-color:var(--gold-light);
+}
 
-      header {
-        padding-top: 50px;
-      }
+/* QUEST PAGE */
 
-      h1 {
-        letter-spacing: 4px;
-      }
-    }
-  </style>
+.quest-page {
+  display:none;
+}
+
+.quest-header {
+  text-align:center;
+  margin-bottom:40px;
+}
+
+.back-button {
+  display:block;
+  width:max-content;
+  margin:0 auto 35px;
+  background:none;
+  border:0;
+  color:#8e866f;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  letter-spacing:1.5px;
+}
+
+.back-button:hover {
+  color:var(--gold-light);
+}
+
+.quest-title {
+  color:var(--gold-light);
+  font-size:clamp(35px,6vw,58px);
+  font-weight:normal;
+  letter-spacing:5px;
+}
+
+.quest-status {
+  margin-top:14px;
+  color:#898271;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+}
+
+.objective-box {
+  max-width:760px;
+  margin:0 auto;
+  border-top:1px solid rgba(201,168,78,.35);
+  border-bottom:1px solid rgba(201,168,78,.35);
+  padding:32px 20px;
+  text-align:center;
+}
+
+.objective-label {
+  color:#88743b;
+  font-size:11px;
+  letter-spacing:3px;
+  margin-bottom:15px;
+}
+
+.objective {
+  font-size:24px;
+  color:#eee8d8;
+  line-height:1.45;
+  font-weight:normal;
+}
+
+.guidance {
+  max-width:760px;
+  margin:35px auto 0;
+}
+
+.guidance-label {
+  color:#88743b;
+  text-align:center;
+  font-size:11px;
+  letter-spacing:3px;
+  margin-bottom:18px;
+}
+
+.hint-buttons {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.hint-button {
+  padding:15px 8px;
+  background:#0b0a08;
+  border:1px solid #5d4d29;
+  color:#bca45d;
+  cursor:pointer;
+  font-size:11px;
+  letter-spacing:1px;
+  transition:.2s;
+}
+
+.hint-button:hover {
+  border-color:var(--gold);
+  color:var(--gold-light);
+}
+
+.hint-button.active {
+  border-color:var(--gold-light);
+  background:rgba(201,168,78,.08);
+}
+
+.hint-box {
+  display:none;
+  margin-top:16px;
+  padding:24px;
+  border:1px solid rgba(201,168,78,.35);
+  background:rgba(12,11,8,.85);
+  color:#d7d0bf;
+  line-height:1.7;
+  font-size:16px;
+}
+
+.hint-box.visible {
+  display:block;
+}
+
+.navigation {
+  max-width:760px;
+  margin:45px auto 0;
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.nav-button {
+  background:none;
+  border:1px solid #5d4d29;
+  color:#bca45d;
+  padding:13px 22px;
+  cursor:pointer;
+  letter-spacing:1px;
+  font-size:11px;
+}
+
+.nav-button:hover {
+  border-color:var(--gold);
+  color:var(--gold-light);
+}
+
+.nav-button:disabled {
+  opacity:.3;
+  cursor:not-allowed;
+}
+
+.step-note {
+  text-align:center;
+  margin-top:20px;
+  color:#625d51;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+footer {
+  border-top:1px solid rgba(201,168,78,.18);
+  text-align:center;
+  padding:27px 20px;
+  color:#625d54;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px) {
+  .quest-grid {
+    grid-template-columns:1fr;
+    max-width:520px;
+    margin:auto;
+  }
+
+  .hint-buttons {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .objective {
+    font-size:20px;
+  }
+
+  .logo {
+    letter-spacing:3px;
+  }
+}
+
+@media(max-width:480px) {
+  header {
+    padding-top:40px;
+  }
+
+  .hint-buttons {
+    grid-template-columns:1fr;
+  }
+
+  .navigation {
+    flex-direction:column;
+  }
+
+  .nav-button {
+    width:100%;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <div class="eyebrow">Elden Ring Spoiler-Conscious Quest Guidance</div>
+<!-- ================= HOME ================= -->
 
-    <h1>GUIDANCE OF GRACE</h1>
+<div id="homePage">
 
-    <div class="subtitle">
-      Need a hint, not a walkthrough?
+<header>
+  <div class="eyebrow">
+    Elden Ring Spoiler-Conscious Quest Guidance
+  </div>
+
+  <h1 class="logo">GUIDANCE OF GRACE</h1>
+
+  <div class="subtitle">
+    Need a hint, not a walkthrough?
+  </div>
+
+  <div class="gold-line"></div>
+</header>
+
+<main class="page">
+
+  <div class="section-title">
+    BASE GAME NPC QUESTS
+  </div>
+
+  <section class="quest-grid">
+
+    <!-- RANNI -->
+
+    <article class="quest-card">
+
+      <div class="art ranni">
+        <div class="moon"></div>
+      </div>
+
+      <div class="card-content">
+
+        <h2 class="quest-name">RANNI</h2>
+
+        <div class="status">
+          <span class="risk yellow"></span>
+          <span>IN PROGRESS</span>
+        </div>
+
+        <div class="risk-description">
+          Main story progression may affect this quest.
+        </div>
+
+        <button class="button" onclick="comingSoon()">
+          BEGIN QUEST
+        </button>
+
+      </div>
+    </article>
+
+
+    <!-- MILLICENT -->
+
+    <article class="quest-card">
+
+      <div class="art millicent">
+        <div class="needle"></div>
+      </div>
+
+      <div class="card-content">
+
+        <h2 class="quest-name">MILLICENT</h2>
+
+        <div class="status">
+          <span class="risk red"></span>
+          <span>IN PROGRESS</span>
+        </div>
+
+        <div class="risk-description">
+          This quest is easy to miss or break.
+        </div>
+
+        <button class="button" onclick="comingSoon()">
+          BEGIN QUEST
+        </button>
+
+      </div>
+    </article>
+
+
+    <!-- YURA -->
+
+    <article class="quest-card">
+
+      <div class="art yura">
+        <div class="blade"></div>
+      </div>
+
+      <div class="card-content">
+
+        <h2 class="quest-name">YURA</h2>
+
+        <div class="status">
+          <span class="risk green"></span>
+          <span>IN PROGRESS</span>
+        </div>
+
+        <div class="risk-description">
+          This quest is difficult to accidentally miss.
+        </div>
+
+        <button class="button" onclick="openYura()">
+          BEGIN QUEST
+        </button>
+
+      </div>
+    </article>
+
+  </section>
+
+</main>
+
+<footer>
+  GUIDANCE OF GRACE · AN UNOFFICIAL FAN PROJECT
+</footer>
+
+</div>
+
+
+<!-- ================= YURA QUEST ================= -->
+
+<div id="yuraPage" class="quest-page">
+
+<header>
+
+  <button class="back-button" onclick="goHome()">
+    ← BACK TO QUESTS
+  </button>
+
+  <div class="eyebrow">
+    Base Game NPC Quest
+  </div>
+
+  <h1 class="quest-title">
+    YURA
+  </h1>
+
+  <div class="quest-status">
+    ● IN PROGRESS
+  </div>
+
+</header>
+
+
+<main class="page">
+
+  <div class="objective-box">
+
+    <div class="objective-label">
+      CURRENT OBJECTIVE
     </div>
 
-    <div class="gold-line"></div>
-  </header>
+    <div id="objective" class="objective"></div>
 
-  <main>
+  </div>
 
-    <div class="section-title">
-      BASE GAME NPC QUESTS
+
+  <section class="guidance">
+
+    <div class="guidance-label">
+      CHOOSE YOUR LEVEL OF GUIDANCE
     </div>
 
-    <section class="quests">
+    <div id="hintButtons" class="hint-buttons"></div>
 
-      <!-- RANNI -->
-      <article class="quest-card">
-        <div class="quest-art ranni-art">
-          <div class="moon"></div>
-        </div>
+    <div id="hintBox" class="hint-box"></div>
 
-        <div class="card-content">
-          <h2 class="quest-name">RANNI</h2>
+  </section>
 
-          <div class="status">
-            <span class="risk yellow"></span>
-            <span>IN PROGRESS</span>
-          </div>
 
-          <div class="risk-text">
-            Main story progression may affect this quest.
-          </div>
+  <div class="navigation">
 
-          <button class="begin" onclick="startQuest('Ranni')">
-            BEGIN QUEST
-          </button>
-        </div>
-      </article>
+    <button
+      id="previousButton"
+      class="nav-button"
+      onclick="previousStep()">
+      ← PREVIOUS STEP
+    </button>
 
-      <!-- MILLICENT -->
-      <article class="quest-card">
-        <div class="quest-art millicent-art">
-          <div class="needle"></div>
-        </div>
+    <button
+      id="nextButton"
+      class="nav-button"
+      onclick="nextStep()">
+      NEXT STEP →
+    </button>
 
-        <div class="card-content">
-          <h2 class="quest-name">MILLICENT</h2>
+  </div>
 
-          <div class="status">
-            <span class="risk red"></span>
-            <span>IN PROGRESS</span>
-          </div>
+  <div id="stepNote" class="step-note"></div>
 
-          <div class="risk-text">
-            This quest is easy to miss or break.
-          </div>
+</main>
 
-          <button class="begin" onclick="startQuest('Millicent')">
-            BEGIN QUEST
-          </button>
-        </div>
-      </article>
+<footer>
+  GUIDANCE OF GRACE · AN UNOFFICIAL FAN PROJECT
+</footer>
 
-      <!-- YURA -->
-      <article class="quest-card">
-        <div class="quest-art yura-art">
-          <div class="blade"></div>
-        </div>
+</div>
 
-        <div class="card-content">
-          <h2 class="quest-name">YURA</h2>
 
-          <div class="status">
-            <span class="risk green"></span>
-            <span>IN PROGRESS</span>
-          </div>
+<script>
 
-          <div class="risk-text">
-            This quest is difficult to accidentally miss.
-          </div>
+/*
+==================================================
+YURA QUEST DATA
+==================================================
 
-          <button class="begin" onclick="startQuest('Yura')">
-            BEGIN QUEST
-          </button>
-        </div>
-      </article>
+This is intentionally separated from the design.
 
-    </section>
+Later, we can add quests simply by adding data here.
+*/
 
-  </main>
+const yuraQuest = [
 
-  <footer>
-    GUIDANCE OF GRACE · AN UNOFFICIAL FAN PROJECT
-  </footer>
+  {
+    objective: "Find Yura beneath the ruins near Agheel Lake.",
 
-  <script>
-    function startQuest(quest) {
-      alert(
-        quest + " guidance is coming next.\n\n" +
-        "We're building the quest system one step at a time."
-      );
+    hints: {
+      nudge:
+        "A wandering hunter has taken an interest in the dangers lurking around the lake.",
+
+      light:
+        "Look beneath an overpass on the southern side of Agheel Lake.",
+
+      heavy:
+        "Search south of Agheel Lake, beneath the large overpass near the lake's eastern side.",
+
+      tell:
+        "Travel to the area beneath the overpass south of Agheel Lake and speak with Yura."
     }
-  </script>
+  },
+
+
+  {
+    objective: "Investigate the invasion near Murkwater Cave.",
+
+    hints: {
+      nudge:
+        "Someone nearby may be looking for a fight.",
+
+      light:
+        "Head toward Murkwater, north of Agheel Lake.",
+
+      heavy:
+        "As you approach Murkwater Cave, watch for an invasion.",
+
+      tell:
+        "Enter the area near Murkwater Cave. Bloody Finger Nerijus will invade. Defeat him."
+    }
+  },
+
+
+  {
+    objective: "Find Yura again after the encounter at Murkwater.",
+
+    hints: {
+      nudge:
+        "The hunter has not gone far.",
+
+      light:
+        "Return to the place where you first met Yura.",
+
+      heavy:
+        "Yura can be found beneath the same overpass south of Agheel Lake.",
+
+      tell:
+        "Return beneath the overpass south of Agheel Lake and speak with Yura again."
+    }
+  },
+
+
+  {
+    objective: "Investigate the red summon sign near the academy.",
+
+    hints: {
+      nudge:
+        "Another Tarnished is in danger, and this time you can choose to intervene.",
+
+      light:
+        "Look near the entrance to Raya Lucaria.",
+
+      heavy:
+        "Search around the Main Academy Gate for a red summon sign.",
+
+      tell:
+        "At the Main Academy Gate Site of Grace, use Yura's red summon sign to enter his world and assist him against Bloody Finger Ravenmount Assassin."
+    }
+  },
+
+
+  {
+    objective: "Speak with Yura after helping him.",
+
+    hints: {
+      nudge:
+        "The hunter should have something to say about the battle.",
+
+      light:
+        "Return to the academy gate area.",
+
+      heavy:
+        "Look along the bridge near the Main Academy Gate.",
+
+      tell:
+        "Return to the Main Academy Gate area and find Yura along the bridge. Speak with him and exhaust his dialogue."
+    }
+  },
+
+
+  {
+    objective: "Find Yura in the Mountaintops of the Giants.",
+
+    hints: {
+      nudge:
+        "The hunter's journey eventually carries him far from Limgrave.",
+
+      light:
+        "Look toward the Mountaintops after progressing through the main story.",
+
+      heavy:
+        "Yura's story eventually leads to the Zamor Ruins Site of Grace.",
+
+      tell:
+        "After reaching the Mountaintops of the Giants, travel to the Zamor Ruins Site of Grace. Speak with the person standing nearby."
+    }
+  },
+
+
+  {
+    objective: "Discover what became of Yura.",
+
+    hints: {
+      nudge:
+        "The person you meet at the Zamor Ruins is not quite who you expected.",
+
+      light:
+        "Pay close attention to the stranger who speaks to you.",
+
+      heavy:
+        "The figure at Zamor Ruins has taken Yura's identity.",
+
+      tell:
+        "Speak with Shabriri at the Zamor Ruins Site of Grace. Yura's quest has reached its conclusion."
+    }
+  }
+
+];
+
+
+/*
+==================================================
+APP STATE
+==================================================
+*/
+
+let currentStep = 0;
+
+const savedStep = localStorage.getItem("yuraProgress");
+
+if (savedStep !== null) {
+  currentStep = Number(savedStep);
+}
+
+
+/*
+==================================================
+OPEN YURA
+==================================================
+*/
+
+function openYura() {
+
+  document.getElementById("homePage").style.display = "none";
+
+  document.getElementById("yuraPage").style.display = "block";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  renderStep();
+}
+
+
+/*
+==================================================
+RETURN HOME
+==================================================
+*/
+
+function goHome() {
+
+  document.getElementById("yuraPage").style.display = "none";
+
+  document.getElementById("homePage").style.display = "block";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/*
+==================================================
+RENDER STEP
+==================================================
+*/
+
+function renderStep() {
+
+  const step = yuraQuest[currentStep];
+
+  document.getElementById("objective").textContent =
+    step.objective;
+
+
+  const buttons = document.getElementById("hintButtons");
+
+  buttons.innerHTML = "";
+
+
+  const levels = [
+    ["nudge", "NUDGE"],
+    ["light", "SPOILER LIGHT"],
+    ["heavy", "SPOILER HEAVY"],
+    ["tell", "TELL ME!"]
+  ];
+
+
+  levels.forEach(level => {
+
+    const button = document.createElement("button");
+
+    button.className = "hint-button";
+
+    button.textContent = level[1];
+
+    button.onclick = () => showHint(
+      level[0],
+      button
+    );
+
+    buttons.appendChild(button);
+
+  });
+
+
+  document.getElementById("hintBox").classList.remove("visible");
+
+  document.getElementById("hintBox").textContent = "";
+
+
+  document.getElementById("previousButton").disabled =
+    currentStep === 0;
+
+
+  document.getElementById("nextButton").disabled =
+    currentStep === yuraQuest.length - 1;
+
+
+  document.getElementById("stepNote").textContent =
+    currentStep === yuraQuest.length - 1
+      ? "QUEST COMPLETE"
+      : "Continue when you are ready.";
+
+
+  localStorage.setItem(
+    "yuraProgress",
+    currentStep
+  );
+
+}
+
+
+/*
+==================================================
+SHOW HINT
+==================================================
+*/
+
+function showHint(level, button) {
+
+  const step = yuraQuest[currentStep];
+
+  const hintBox = document.getElementById("hintBox");
+
+  hintBox.textContent = step.hints[level];
+
+  hintBox.classList.add("visible");
+
+
+  document.querySelectorAll(".hint-button")
+    .forEach(btn => btn.classList.remove("active"));
+
+  button.classList.add("active");
+}
+
+
+/*
+==================================================
+NEXT
+==================================================
+*/
+
+function nextStep() {
+
+  if (currentStep < yuraQuest.length - 1) {
+
+    currentStep++;
+
+    renderStep();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+}
+
+
+/*
+==================================================
+PREVIOUS
+==================================================
+*/
+
+function previousStep() {
+
+  if (currentStep > 0) {
+
+    currentStep--;
+
+    renderStep();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
+  }
+
+}
+
+
+/*
+==================================================
+PLACEHOLDER QUESTS
+==================================================
+*/
+
+function comingSoon() {
+
+  alert(
+    "This quest is coming soon.\n\n" +
+    "Yura is our first fully playable quest."
+  );
+
+}
+
+</script>
 
 </body>
 </html>
