@@ -861,6 +861,7 @@ function renderStep() {
 
   const step = yuraQuest[currentStep];
 
+  // Show the intentionally vague objective
   document.getElementById("objective").textContent =
     step.objective;
 
@@ -870,51 +871,74 @@ function renderStep() {
   buttons.innerHTML = "";
 
 
-  const levels = [
-    ["nudge", "NUDGE"],
-    ["light", "SPOILER LIGHT"],
-    ["heavy", "SPOILER HEAVY"],
-    ["tell", "TELL ME!"]
+  /*
+  Each step can decide which guidance levels it needs.
+
+  If no "levels" property exists,
+  we use all four levels by default.
+  */
+
+  const availableLevels = step.levels || [
+    "nudge",
+    "light",
+    "heavy",
+    "tell"
   ];
 
 
-  levels.forEach(level => {
+  const levelNames = {
+    nudge: "NUDGE",
+    light: "SPOILER LIGHT",
+    heavy: "SPOILER HEAVY",
+    tell: "TELL ME!"
+  };
+
+
+  availableLevels.forEach(level => {
 
     const button = document.createElement("button");
 
     button.className = "hint-button";
 
-    button.textContent = level[1];
+    button.textContent = levelNames[level];
 
-    button.onclick = () => showHint(
-      level[0],
-      button
-    );
+
+    button.onclick = () => {
+
+      showHint(level, button);
+
+    };
+
 
     buttons.appendChild(button);
 
   });
 
 
+  // Clear previous hint
   document.getElementById("hintBox").classList.remove("visible");
 
   document.getElementById("hintBox").textContent = "";
 
 
+  // Previous button
   document.getElementById("previousButton").disabled =
     currentStep === 0;
 
 
+  // Next button
   document.getElementById("nextButton").disabled =
     currentStep === yuraQuest.length - 1;
 
 
+  // Status text
   document.getElementById("stepNote").textContent =
     currentStep === yuraQuest.length - 1
       ? "QUEST COMPLETE"
       : "Continue when you are ready.";
 
 
+  // Save progress locally
   localStorage.setItem(
     "yuraProgress",
     currentStep
