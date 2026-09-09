@@ -548,10 +548,10 @@ footer {
           This quest is difficult to accidentally miss.
         </div>
 
-       <button
+      <button
   class="button"
   id="yuraButton"
-  onclick="openYura()">
+  onclick="handleYuraButton()">
   BEGIN QUEST
 </button>
 
@@ -830,6 +830,9 @@ let currentStep = 0;
 let yuraComplete =
   localStorage.getItem("yuraComplete") === "true";
 
+let yuraStarted =
+  localStorage.getItem("yuraStarted") === "true";
+
 const savedStep =
   localStorage.getItem("yuraProgress");
 
@@ -1023,6 +1026,8 @@ function nextStep() {
   if (currentStep < yuraQuest.length - 1) {
 
     currentStep++;
+
+    localStorage.setItem("yuraStarted", "true");
 
     renderStep();
 
