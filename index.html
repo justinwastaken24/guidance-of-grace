@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Guidance of Grace</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 50% 0%, #1d170b 0%, #090909 38%, #050505 100%);
+      color: #eee8d5;
+      font-family: Georgia, "Times New Roman", serif;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      border: 1px solid rgba(190, 155, 70, 0.18);
+    }
+
+    header {
+      text-align: center;
+      padding: 75px 20px 55px;
+    }
+
+    .eyebrow {
+      color: #a88a43;
+      font-size: 12px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      color: #d5b65c;
+      font-size: clamp(42px, 8vw, 76px);
+      letter-spacing: 7px;
+      font-weight: normal;
+      text-shadow: 0 0 25px rgba(213, 182, 92, 0.15);
+    }
+
+    .subtitle {
+      color: #b8b1a0;
+      font-size: 17px;
+      margin-top: 18px;
+      font-style: italic;
+    }
+
+    .gold-line {
+      width: 100px;
+      height: 1px;
+      background: #a88a43;
+      margin: 32px auto 0;
+      opacity: 0.7;
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    .section-title {
+      color: #c6a653;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .quests {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .quest-card {
+      position: relative;
+      min-height: 340px;
+      border: 1px solid rgba(182, 150, 68, 0.55);
+      background: linear-gradient(
+        145deg,
+        rgba(28, 23, 14, 0.95),
+        rgba(8, 8, 8, 0.98)
+      );
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .quest-card:hover {
+      transform: translateY(-5px);
+      border-color: #c7a84d;
+    }
+
+    .quest-art {
+      height: 170px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Original CSS artwork — no external copyrighted images */
+    .ranni-art {
+      background:
+        radial-gradient(circle at 65% 38%, rgba(125, 155, 215, 0.8) 0 9%, transparent 10%),
+        radial-gradient(circle at 65% 38%, rgba(82, 111, 175, 0.2) 0 28%, transparent 29%),
+        linear-gradient(145deg, #11172a, #090b12 65%, #050505);
+    }
+
+    .millicent-art {
+      background:
+        radial-gradient(circle at 25% 70%, rgba(140, 75, 55, 0.45), transparent 25%),
+        radial-gradient(circle at 75% 25%, rgba(170, 120, 50, 0.22), transparent 30%),
+        linear-gradient(145deg, #24150f, #100b09 65%, #050505);
+    }
+
+    .yura-art {
+      background:
+        radial-gradient(circle at 70% 35%, rgba(130, 20, 20, 0.5), transparent 27%),
+        linear-gradient(145deg, #210c0c, #0d0707 65%, #050505);
+    }
+
+    .moon {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 1px solid rgba(190, 210, 255, 0.55);
+      top: 38px;
+      right: 55px;
+      box-shadow: 0 0 35px rgba(120, 155, 220, 0.35);
+    }
+
+    .needle {
+      position: absolute;
+      width: 3px;
+      height: 120px;
+      background: rgba(205, 170, 75, 0.45);
+      transform: rotate(35deg);
+      left: 48%;
+      top: 25px;
+    }
+
+    .blade {
+      position: absolute;
+      width: 160px;
+      height: 2px;
+      background: rgba(180, 40, 35, 0.7);
+      transform: rotate(-35deg);
+      right: -20px;
+      bottom: 40px;
+      box-shadow: 0 0 12px rgba(180, 40, 35, 0.4);
+    }
+
+    .card-content {
+      padding: 24px;
+    }
+
+    .quest-name {
+      color: #d7bd72;
+      font-size: 27px;
+      letter-spacing: 3px;
+      font-weight: normal;
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 14px;
+      color: #aaa393;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+    }
+
+    .risk {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .green {
+      background: #6d9b67;
+      box-shadow: 0 0 7px rgba(109, 155, 103, 0.45);
+    }
+
+    .yellow {
+      background: #b69a4b;
+      box-shadow: 0 0 7px rgba(182, 154, 75, 0.45);
+    }
+
+    .red {
+      background: #a94c46;
+      box-shadow: 0 0 7px rgba(169, 76, 70, 0.45);
+    }
+
+    .risk-text {
+      margin-top: 12px;
+      color: #777264;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .begin {
+      width: 100%;
+      margin-top: 22px;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid #806a38;
+      color: #cdb15c;
+      font-family: Georgia, serif;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .begin:hover {
+      background: rgba(180, 145, 55, 0.1);
+      border-color: #cdb15c;
+    }
+
+    footer {
+      border-top: 1px solid rgba(180, 145, 55, 0.2);
+      text-align: center;
+      padding: 28px 20px;
+      color: #686358;
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 800px) {
+      .quests {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      header {
+        padding-top: 50px;
+      }
+
+      h1 {
+        letter-spacing: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="eyebrow">Elden Ring Spoiler-Conscious Quest Guidance</div>
+
+    <h1>GUIDANCE OF GRACE</h1>
+
+    <div class="subtitle">
+      Need a hint, not a walkthrough?
+    </div>
+
+    <div class="gold-line"></div>
+  </header>
+
+  <main>
+
+    <div class="section-title">
+      BASE GAME NPC QUESTS
+    </div>
+
+    <section class="quests">
+
+      <!-- RANNI -->
+      <article class="quest-card">
+        <div class="quest-art ranni-art">
+          <div class="moon"></div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="quest-name">RANNI</h2>
+
+          <div class="status">
+            <span class="risk yellow"></span>
+            <span>IN PROGRESS</span>
+          </div>
+
+          <div class="risk-text">
+            Main story progression may affect this quest.
+          </div>
+
+          <button class="begin" onclick="startQuest('Ranni')">
+            BEGIN QUEST
+          </button>
+        </div>
+      </article>
+
+      <!-- MILLICENT -->
+      <article class="quest-card">
+        <div class="quest-art millicent-art">
+          <div class="needle"></div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="quest-name">MILLICENT</h2>
+
+          <div class="status">
+            <span class="risk red"></span>
+            <span>IN PROGRESS</span>
+          </div>
+
+          <div class="risk-text">
+            This quest is easy to miss or break.
+          </div>
+
+          <button class="begin" onclick="startQuest('Millicent')">
+            BEGIN QUEST
+          </button>
+        </div>
+      </article>
+
+      <!-- YURA -->
+      <article class="quest-card">
+        <div class="quest-art yura-art">
+          <div class="blade"></div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="quest-name">YURA</h2>
+
+          <div class="status">
+            <span class="risk green"></span>
+            <span>IN PROGRESS</span>
+          </div>
+
+          <div class="risk-text">
+            This quest is difficult to accidentally miss.
+          </div>
+
+          <button class="begin" onclick="startQuest('Yura')">
+            BEGIN QUEST
+          </button>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <footer>
+    GUIDANCE OF GRACE · AN UNOFFICIAL FAN PROJECT
+  </footer>
+
+  <script>
+    function startQuest(quest) {
+      alert(
+        quest + " guidance is coming next.\n\n" +
+        "We're building the quest system one step at a time."
+      );
+    }
+  </script>
+
+</body>
+</html>
